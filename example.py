@@ -1,6 +1,4 @@
-#import test
-#import score_rbs
-import sys
+import score_rbs
 
 
 rbs = score_rbs.ScoreXlationInit()

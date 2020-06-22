@@ -225,6 +225,7 @@ class ScoreXlationInit():
 		return score, cdn_scr, codon, rbs_scr, rbs, offset
 
 	def score_init_codon(self, seqR, init_pos):
+		"""Returns the start codon score"""
 		#$seqR && $init_pos
 		#    or return ();
 		#$scores ||= \%init_scr;
@@ -239,6 +240,7 @@ class ScoreXlationInit():
 
 
 	def score_init_rbs(self, seqR, init_pos):
+		"""Returns the rbs score"""
 		best = [ 0, None, None ]
 
 		for i in range(-4, -14, -1):
@@ -258,11 +260,11 @@ class ScoreXlationInit():
 
 
 	def _load_data(self):
-		#  Load the rbs score data
+		"""Load the rbs score data"""
 		for line in __DATA__.split('\n'):
-			seq, bkg, mx, _, *data = line.split()
-			#next unless $max >= $min_max_scr;
-			if not float(mx) >= self.min_max_scr: continue
+			seq, bkg, max, _, *data = line.split()
+			
+			if not float(max) >= self.min_max_scr: continue
 
 			ttl_cnt = 0
 			max_cnt = 0
@@ -277,7 +279,6 @@ class ScoreXlationInit():
 
 			#  Scores are read from DATA block with offsets -13 to -4.
 			#  They are recorded here in order -4 to -13.
-			#for ( my $i = 0; $i <= 9; $i++ )
 			for i in range(0, 10):
 				scr = scrs[i];
 				if scr >= self.min_scr: self.rbs_scr[ 9 - i ][ seq ] = scr  
